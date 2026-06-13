@@ -5,7 +5,7 @@
 // ─── API URL: auto-detect local vs production ───
 // Replace PASTE_YOUR_RENDER_URL_HERE with your actual Render backend URL after deploying
 const PROD_API = 'PASTE_YOUR_RENDER_URL_HERE/api';
-const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:' || window.location.hostname === '')
   ? 'http://localhost:5000/api'
   : PROD_API;
 let token = localStorage.getItem('psa_token');

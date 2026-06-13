@@ -14,13 +14,17 @@ const allowedOrigins = [
   'http://localhost:3001',
   'http://127.0.0.1:3001',
   'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'null', // file:// pages send origin as "null"
   process.env.FRONTEND_URL,  // set this on Render to your Netlify URL
 ].filter(Boolean);
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, etc.)
-    if (!origin) return callback(null, true);
+    // Allow requests with no origin (mobile apps, curl, etc.) or file:// (origin = "null")
+    if (!origin || origin === 'null') return callback(null, true);
     if (allowedOrigins.includes(origin) || process.env.NODE_ENV === 'production') {
       return callback(null, true);
     }
