@@ -17,6 +17,7 @@ const allowedOrigins = [
   'http://127.0.0.1:5500',
   'http://localhost:3000',
   'http://127.0.0.1:3000',
+  'https://leafy-pixie-19035b.netlify.app',
   'null', // file:// pages send origin as "null"
   process.env.FRONTEND_URL,  // set this on Render to your Netlify URL
 ].filter(Boolean);
