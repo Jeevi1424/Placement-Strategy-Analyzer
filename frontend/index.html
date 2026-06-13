@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Placement Strategy Analyzer Pro</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+</head>
+<body>
+
+<!-- PARTICLE BACKGROUND -->
+<div id="particles-js"></div>
+
+<!-- LOADING SCREEN -->
+<div id="loading-screen">
+  <div class="loader-content">
+    <div class="loader-logo">
+      <div class="logo-3d">PSA</div>
+    </div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <p>Initializing AI Engine...</p>
+  </div>
+</div>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen" class="screen">
+  <div class="auth-bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+  <div class="auth-wrapper">
+    <div class="auth-left">
+      <div class="auth-brand">
+        <div class="brand-icon">🎯</div>
+        <h1>Placement Strategy<br/><span>Analyzer Pro</span></h1>
+        <p>AI-powered platform to crack your dream placement</p>
+      </div>
+      <div class="auth-features">
+        <div class="feat-item"><span>🧠</span> AI-Powered Learning Engine</div>
+        <div class="feat-item"><span>📊</span> Real-time Performance Analytics</div>
+        <div class="feat-item"><span>🏆</span> Competitive Leaderboard</div>
+        <div class="feat-item"><span>💻</span> Code Practice Arena</div>
+        <div class="feat-item"><span>🎯</span> Weak Area Detection</div>
+        <div class="feat-item"><span>📱</span> Mock Interview Simulator</div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-card glass-card">
+        <div class="auth-tabs">
+          <button class="tab-btn active" id="tab-login" onclick="switchAuthTab('login')">Sign In</button>
+          <button class="tab-btn" id="tab-register" onclick="switchAuthTab('register')">Sign Up</button>
+          <div class="tab-slider" id="tab-slider"></div>
+        </div>
+
+        <form id="login-form" class="auth-form" onsubmit="handleLogin(event)">
+          <div class="input-group">
+            <span class="input-icon">📧</span>
+            <input type="email" id="login-email" placeholder="Email address" required />
+          </div>
+          <div class="input-group">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="login-password" placeholder="Password" required />
+          </div>
+          <button type="submit" class="btn-3d btn-primary-3d">
+            <span>Sign In</span>
+            <div class="btn-shine"></div>
+          </button>
+          <p id="login-error" class="error-msg"></p>
+        </form>
+
+        <form id="register-form" class="auth-form hidden" onsubmit="handleRegister(event)">
+          <div class="input-group">
+            <span class="input-icon">👤</span>
+            <input type="text" id="reg-username" placeholder="Full Name" required />
+          </div>
+          <div class="input-group">
+            <span class="input-icon">📧</span>
+            <input type="email" id="reg-email" placeholder="Email address" required />
+          </div>
+          <div class="input-group">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="reg-password" placeholder="Password (min 6 chars)" required />
+          </div>
+          <button type="submit" class="btn-3d btn-primary-3d">
+            <span>Create Account</span>
+            <div class="btn-shine"></div>
+          </button>
+          <p id="register-error" class="error-msg"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app-screen" class="screen">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-3d-small">PSA</div>
+      <span class="logo-label">Analyzer Pro</span>
+    </div>
+
+    <div class="sidebar-user glass-card-sm">
+      <div class="user-avatar-3d" id="sidebar-avatar">U</div>
+      <div class="user-details">
+        <span id="sidebar-username">User</span>
+        <span class="user-streak" id="sidebar-streak">🔥 0 day streak</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#" class="nav-link active" data-section="dashboard" onclick="showSection('dashboard',this)">
+        <span class="nav-icon">🏠</span><span class="nav-text">Dashboard</span>
+        <div class="nav-glow"></div>
+      </a></li>
+      <li><a href="#" class="nav-link" data-section="quiz" onclick="showSection('quiz',this)">
+        <span class="nav-icon">📝</span><span class="nav-text">Quiz Arena</span>
+        <div class="nav-glow"></div>
+      </a></li>
+      <li><a href="#" class="nav-link" data-section="analytics" onclick="showSection('analytics',this)">
+        <span class="nav-icon">📈</span><span class="nav-text">Analytics</span>
+        <div class="nav-glow"></div>
+      </a></li>
+      <li><a href="#" class="nav-link" data-section="learning" onclick="showSection('learning',this)">
+        <span class="nav-icon">🎓</span><span class="nav-text">AI Learning</span>
+        <div class="nav-glow"></div>
+      </a></li>
+      <li><a href="#" class="nav-link" data-section="code" onclick="showSection('code',this)">
+        <span class="nav-icon">💻</span><span class="nav-text">Code Arena</span>
+        <div class="nav-glow"></div>
+      </a></li>
+      <li><a href="#" class="nav-link" data-section="interview" onclick="showSection('interview',this)">
+        <span class="nav-icon">🎤</span><span class="nav-text">Interview Prep</span>
+        <div class="nav-glow"></div>
+      </a></li>
+      <li><a href="#" class="nav-link" data-section="roadmap" onclick="showSection('roadmap',this)">
+        <span class="nav-icon">🗺️</span><span class="nav-text">Roadmap</span>
+        <div class="nav-glow"></div>
+      </a></li>
+      <li><a href="#" class="nav-link" data-section="leaderboard" onclick="showSection('leaderboard',this)">
+        <span class="nav-icon">🏆</span><span class="nav-text">Leaderboard</span>
+        <div class="nav-glow"></div>
+      </a></li>
+    </ul>
+
+    <div class="sidebar-bottom">
+      <div class="placement-score-widget">
+        <span>Placement Score</span>
+        <div class="score-ring">
+          <svg viewBox="0 0 36 36">
+            <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path class="ring-fill" id="score-ring-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+          </svg>
+          <span id="score-ring-text">0%</span>
+        </div>
+      </div>
+      <button class="logout-btn-3d" onclick="logout()">
+        <span>⏻</span> Logout
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <h2 id="section-title">Dashboard</h2>
+      </div>
+      <div class="topbar-right">
+        <div class="xp-bar">
+          <span class="xp-label">XP</span>
+          <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
+          <span class="xp-val" id="xp-val">0</span>
+        </div>
+        <div class="notif-bell" onclick="toggleNotif()">🔔<span class="notif-dot"></span></div>
+        <div class="topbar-avatar" id="topbar-avatar">U</div>
+      </div>
+    </header>
+
+    <!-- NOTIFICATION PANEL -->
+    <div class="notif-panel glass-card" id="notif-panel" style="display:none">
+      <h4>Notifications</h4>
+      <div class="notif-item">🎯 You're ready for your next quiz!</div>
+      <div class="notif-item">📚 New learning content available</div>
+      <div class="notif-item">🏆 You're in top 10 on leaderboard</div>
+    </div>
+
+    <!-- ═══════════════ DASHBOARD ═══════════════ -->
+    <section id="section-dashboard" class="content-section active">
+
+      <div class="welcome-banner glass-card">
+        <div class="welcome-text">
+          <h3>Welcome back, <span id="welcome-name">User</span>! 👋</h3>
+          <p>Your placement readiness score has improved. Keep it up!</p>
+        </div>
+        <div class="welcome-actions">
+          <button class="btn-3d btn-sm" onclick="showSection('quiz', document.querySelector('[data-section=quiz]'))">Start Quiz 🚀</button>
+          <button class="btn-3d btn-outline-sm" onclick="showSection('roadmap', document.querySelector('[data-section=roadmap]'))">View Roadmap 🗺️</button>
+        </div>
+      </div>
+
+      <div class="stats-grid-3d">
+        <div class="stat-card-3d" style="--accent:#667eea">
+          <div class="stat-3d-inner">
+            <div class="stat-3d-icon">📝</div>
+            <div class="stat-3d-info">
+              <h3 id="stat-attempts">0</h3>
+              <p>Total Quizzes</p>
+            </div>
+          </div>
+          <div class="stat-3d-glow"></div>
+        </div>
+        <div class="stat-card-3d" style="--accent:#f093fb">
+          <div class="stat-3d-inner">
+            <div class="stat-3d-icon">🎯</div>
+            <div class="stat-3d-info">
+              <h3 id="stat-avg">0%</h3>
+              <p>Average Score</p>
+            </div>
+          </div>
+          <div class="stat-3d-glow"></div>
+        </div>
+        <div class="stat-card-3d" style="--accent:#43e97b">
+          <div class="stat-3d-inner">
+            <div class="stat-3d-icon">🏆</div>
+            <div class="stat-3d-info">
+              <h3 id="stat-best">0%</h3>
+              <p>Best Score</p>
+            </div>
+          </div>
+          <div class="stat-3d-glow"></div>
+        </div>
+        <div class="stat-card-3d" style="--accent:#4facfe">
+          <div class="stat-3d-inner">
+            <div class="stat-3d-icon">📚</div>
+            <div class="stat-3d-info">
+              <h3 id="stat-topics">0</h3>
+              <p>Topics Covered</p>
+            </div>
+          </div>
+          <div class="stat-3d-glow"></div>
+        </div>
+        <div class="stat-card-3d" style="--accent:#fa709a">
+          <div class="stat-3d-inner">
+            <div class="stat-3d-icon">⏱️</div>
+            <div class="stat-3d-info">
+              <h3 id="stat-time">0m</h3>
+              <p>Study Time</p>
+            </div>
+          </div>
+          <div class="stat-3d-glow"></div>
+        </div>
+        <div class="stat-card-3d" style="--accent:#a18cd1">
+          <div class="stat-3d-inner">
+            <div class="stat-3d-icon">🔥</div>
+            <div class="stat-3d-info">
+              <h3 id="stat-streak">0</h3>
+              <p>Day Streak</p>
+            </div>
+          </div>
+          <div class="stat-3d-glow"></div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="glass-card chart-card">
+          <h3>📈 Performance Trend</h3>
+          <canvas id="performanceChart" height="180"></canvas>
+        </div>
+        <div class="glass-card chart-card">
+          <h3>🍩 Topic Distribution</h3>
+          <canvas id="distributionChart" height="180"></canvas>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <h3>⚡ Quick Launch Topics</h3>
+        <div class="quick-grid">
+          <button class="quick-card" onclick="quickStartQuiz('aptitude')">
+            <span class="qc-icon">📐</span><span>Aptitude</span>
+          </button>
+          <button class="quick-card" onclick="quickStartQuiz('reasoning')">
+            <span class="qc-icon">🧠</span><span>Reasoning</span>
+          </button>
+          <button class="quick-card" onclick="quickStartQuiz('verbal')">
+            <span class="qc-icon">📖</span><span>Verbal</span>
+          </button>
+          <button class="quick-card" onclick="quickStartQuiz('technical')">
+            <span class="qc-icon">💻</span><span>Technical</span>
+          </button>
+          <button class="quick-card" onclick="quickStartQuiz('cs-fundamentals')">
+            <span class="qc-icon">🖥️</span><span>CS Fundamentals</span>
+          </button>
+          <button class="quick-card" onclick="quickStartQuiz('hr')">
+            <span class="qc-icon">🤝</span><span>HR Round</span>
+          </button>
+          <button class="quick-card" onclick="quickStartQuiz('dbms')">
+            <span class="qc-icon">🗄️</span><span>DBMS</span>
+          </button>
+          <button class="quick-card" onclick="quickStartQuiz('networking')">
+            <span class="qc-icon">🌐</span><span>Networking</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <h3>⚠️ Weak Areas Radar</h3>
+        <div id="weak-areas-list"><p class="empty-state">🎯 Take quizzes to identify your weak areas!</p></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ QUIZ ═══════════════ -->
+    <section id="section-quiz" class="content-section">
+      <div id="quiz-home">
+        <div class="section-header">
+          <h3>🎯 Choose Your Battle</h3>
+          <p>Select a topic and test your knowledge</p>
+        </div>
+        <div class="topics-3d-grid" id="topic-grid"></div>
+      </div>
+
+      <div id="quiz-active" class="hidden">
+        <div class="quiz-cockpit glass-card">
+          <div class="quiz-hud">
+            <div class="hud-item">
+              <span class="hud-label">Topic</span>
+              <span id="quiz-topic-label" class="badge-3d">-</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">Progress</span>
+              <span id="quiz-progress">1/5</span>
+            </div>
+            <div class="hud-timer" id="quiz-timer">00:00</div>
+            <div class="hud-item">
+              <span class="hud-label">Score</span>
+              <span id="live-score" class="score-live">0</span>
+            </div>
+          </div>
+          <div class="quiz-progress-bar">
+            <div class="quiz-progress-fill" id="quiz-prog-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="question-card-3d glass-card">
+          <div class="q-number" id="q-number">Q1</div>
+          <p id="question-text" class="question-text-3d"></p>
+          <div id="options-list" class="options-grid"></div>
+        </div>
+
+        <div class="quiz-nav-3d">
+          <button id="prev-btn" class="btn-3d btn-outline-sm" onclick="prevQuestion()">← Prev</button>
+          <div class="q-dots" id="q-dots"></div>
+          <button id="next-btn" class="btn-3d btn-sm" onclick="nextQuestion()">Next →</button>
+          <button id="submit-btn" class="btn-3d btn-success-3d hidden" onclick="submitQuiz()">Submit ✓</button>
+        </div>
+      </div>
+
+      <div id="quiz-result" class="hidden">
+        <div class="result-3d glass-card">
+          <div class="result-confetti" id="result-confetti"></div>
+          <div class="result-ring">
+            <svg viewBox="0 0 120 120" width="160" height="160">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#1a1a3e" stroke-width="10"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#resultGrad)" stroke-width="10"
+                stroke-dasharray="0 314" stroke-linecap="round" id="result-ring-anim"
+                transform="rotate(-90 60 60)"/>
+              <defs>
+                <linearGradient id="resultGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#667eea"/>
+                  <stop offset="100%" stop-color="#f093fb"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="result-pct" id="result-pct">0%</div>
+          </div>
+          <h2 id="result-title">-</h2>
+          <p id="result-subtitle" class="result-sub">-</p>
+          <div class="result-stats-row">
+            <div class="rs-item"><span id="rs-correct">0</span><small>Correct</small></div>
+            <div class="rs-item"><span id="rs-wrong">0</span><small>Wrong</small></div>
+            <div class="rs-item"><span id="rs-time">0s</span><small>Time</small></div>
+            <div class="rs-item"><span id="rs-xp">+0</span><small>XP Earned</small></div>
+          </div>
+          <div id="result-breakdown" class="result-breakdown"></div>
+          <div class="result-actions">
+            <button class="btn-3d btn-primary-3d" onclick="retakeQuiz()">🔄 Retake</button>
+            <button class="btn-3d btn-outline-sm" onclick="backToQuizHome()">← Topics</button>
+            <button class="btn-3d btn-sm" onclick="showSection('analytics', document.querySelector('[data-section=analytics]'))">📊 Analytics</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ ANALYTICS ═══════════════ -->
+    <section id="section-analytics" class="content-section">
+      <div class="stats-grid-3d">
+        <div class="stat-card-3d" style="--accent:#667eea">
+          <div class="stat-3d-inner"><div class="stat-3d-icon">📊</div><div class="stat-3d-info"><h3 id="ana-attempts">0</h3><p>Total Quizzes</p></div></div>
+          <div class="stat-3d-glow"></div>
+        </div>
+        <div class="stat-card-3d" style="--accent:#f093fb">
+          <div class="stat-3d-inner"><div class="stat-3d-icon">⚡</div><div class="stat-3d-info"><h3 id="ana-avg">0%</h3><p>Avg Score</p></div></div>
+          <div class="stat-3d-glow"></div>
+        </div>
+        <div class="stat-card-3d" style="--accent:#43e97b">
+          <div class="stat-3d-inner"><div class="stat-3d-icon">🎯</div><div class="stat-3d-info"><h3 id="ana-best">0%</h3><p>Best Score</p></div></div>
+          <div class="stat-3d-glow"></div>
+        </div>
+        <div class="stat-card-3d" style="--accent:#4facfe">
+          <div class="stat-3d-inner"><div class="stat-3d-icon">🏅</div><div class="stat-3d-info"><h3 id="ana-level">-</h3><p>Level</p></div></div>
+          <div class="stat-3d-glow"></div>
+        </div>
+      </div>
+      <div class="dash-grid">
+        <div class="glass-card chart-card">
+          <h3>🕸️ Skills Radar</h3>
+          <canvas id="radarChart" height="250"></canvas>
+        </div>
+        <div class="glass-card chart-card">
+          <h3>📉 Skill Gap Analysis</h3>
+          <div id="skill-gap-list"></div>
+        </div>
+      </div>
+      <div class="glass-card">
+        <h3>📋 Topic Breakdown</h3>
+        <div id="topic-breakdown-table"></div>
+      </div>
+      <div class="glass-card">
+        <h3>💡 AI Recommendations</h3>
+        <div id="recommendations-list"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ LEARNING ═══════════════ -->
+    <section id="section-learning" class="content-section">
+      <div id="learning-home">
+        <div class="section-header">
+          <h3>🎓 AI Learning Hub</h3>
+          <p>Personalized content based on your performance</p>
+        </div>
+        <div class="learning-3d-grid">
+          <div class="learn-card-3d" onclick="loadLearning('aptitude')">
+            <div class="learn-card-inner">
+              <div class="learn-icon">📐</div>
+              <h3>Aptitude</h3>
+              <p>Number systems, percentages, time & work</p>
+              <div class="learn-badge">4 modules</div>
+            </div>
+          </div>
+          <div class="learn-card-3d" onclick="loadLearning('reasoning')">
+            <div class="learn-card-inner">
+              <div class="learn-icon">🧠</div>
+              <h3>Logical Reasoning</h3>
+              <p>Patterns, coding, blood relations</p>
+              <div class="learn-badge">3 modules</div>
+            </div>
+          </div>
+          <div class="learn-card-3d" onclick="loadLearning('verbal')">
+            <div class="learn-card-inner">
+              <div class="learn-icon">📖</div>
+              <h3>Verbal Ability</h3>
+              <p>Vocab, grammar, comprehension</p>
+              <div class="learn-badge">3 modules</div>
+            </div>
+          </div>
+          <div class="learn-card-3d" onclick="loadLearning('technical')">
+            <div class="learn-card-inner">
+              <div class="learn-icon">💻</div>
+              <h3>Technical (DSA)</h3>
+              <p>Data structures, algorithms, complexity</p>
+              <div class="learn-badge">4 modules</div>
+            </div>
+          </div>
+          <div class="learn-card-3d" onclick="loadLearning('cs-fundamentals')">
+            <div class="learn-card-inner">
+              <div class="learn-icon">🖥️</div>
+              <h3>CS Fundamentals</h3>
+              <p>OS, DBMS, CN, OOP, System Design</p>
+              <div class="learn-badge">5 modules</div>
+            </div>
+          </div>
+          <div class="learn-card-3d" onclick="loadLearning('hr')">
+            <div class="learn-card-inner">
+              <div class="learn-icon">🤝</div>
+              <h3>HR & Soft Skills</h3>
+              <p>Interview prep, body language, STAR method</p>
+              <div class="learn-badge">3 modules</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card" style="margin-top:1.5rem">
+          <h3>🤖 AI Insights</h3>
+          <div id="ai-insights-content">
+            <button class="btn-3d btn-primary-3d" onclick="loadAIInsights()">✨ Get My AI Insights</button>
+          </div>
+        </div>
+      </div>
+      <div id="learning-detail" class="hidden">
+        <button class="btn-3d btn-outline-sm" onclick="hideLearningDetail()" style="margin-bottom:1rem">← Back</button>
+        <div id="learning-detail-content"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ CODE ARENA ═══════════════ -->
+    <section id="section-code" class="content-section">
+      <div class="code-arena-header glass-card">
+        <h3>💻 Code Practice Arena</h3>
+        <div class="code-controls">
+          <select id="code-difficulty" class="select-3d">
+            <option value="easy">🟢 Easy</option>
+            <option value="medium">🟡 Medium</option>
+            <option value="hard">🔴 Hard</option>
+          </select>
+          <button class="btn-3d btn-primary-3d" onclick="loadCodeProblem()">Get Problem 🎲</button>
+        </div>
+      </div>
+      <div id="code-problem-view" class="hidden">
+        <div class="glass-card">
+          <div class="code-header">
+            <h3 id="code-title">-</h3>
+            <span id="code-diff-badge" class="badge-3d">Easy</span>
+            <span id="code-topic-badge" class="badge-3d" style="--badge-color:#f093fb">-</span>
+          </div>
+          <p id="code-desc" class="code-desc-text"></p>
+          <div class="test-cases-box">
+            <h4>🧪 Test Cases</h4>
+            <div id="code-testcases"></div>
+          </div>
+          <div class="editor-wrapper">
+            <div class="editor-header">
+              <span>✏️ Your Solution</span>
+              <button class="btn-3d btn-outline-sm" onclick="clearEditor()">Clear</button>
+            </div>
+            <textarea id="code-editor" class="code-editor-3d" rows="14" spellcheck="false"></textarea>
+          </div>
+          <div class="code-actions">
+            <button class="btn-3d btn-outline-sm" onclick="showSolution()">💡 Show Solution</button>
+            <button class="btn-3d btn-primary-3d" onclick="loadCodeProblem()">Next Problem →</button>
+          </div>
+          <div id="solution-view" class="hidden solution-reveal">
+            <h4>✅ Solution</h4>
+            <pre id="solution-code" class="solution-pre"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ INTERVIEW PREP ═══════════════ -->
+    <section id="section-interview" class="content-section">
+      <div class="section-header">
+        <h3>🎤 Interview Preparation Hub</h3>
+        <p>Ace your technical and HR interviews</p>
+      </div>
+      <div class="interview-grid">
+        <div class="glass-card interview-topic-card" onclick="loadInterviewQ('technical')">
+          <div class="itc-icon">💻</div>
+          <h3>Technical Interview</h3>
+          <p>DSA, System Design, OOP, DB queries</p>
+          <span class="badge-3d">50+ Questions</span>
+        </div>
+        <div class="glass-card interview-topic-card" onclick="loadInterviewQ('hr')">
+          <div class="itc-icon">🤝</div>
+          <h3>HR Interview</h3>
+          <p>Behavioral, situational, STAR method</p>
+          <span class="badge-3d">30+ Questions</span>
+        </div>
+        <div class="glass-card interview-topic-card" onclick="loadInterviewQ('aptitude-interview')">
+          <div class="itc-icon">📐</div>
+          <h3>Aptitude Round</h3>
+          <p>Speed math, puzzles, brain teasers</p>
+          <span class="badge-3d">40+ Questions</span>
+        </div>
+        <div class="glass-card interview-topic-card" onclick="loadInterviewQ('system-design')">
+          <div class="itc-icon">🏗️</div>
+          <h3>System Design</h3>
+          <p>Scalability, microservices, databases</p>
+          <span class="badge-3d">20+ Questions</span>
+        </div>
+      </div>
+      <div id="interview-qa" class="hidden glass-card" style="margin-top:1.5rem">
+        <div class="iqa-header">
+          <h3 id="iqa-title">Interview Q&A</h3>
+          <button class="btn-3d btn-outline-sm" onclick="document.getElementById('interview-qa').classList.add('hidden')">← Back</button>
+        </div>
+        <div id="iqa-content"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ ROADMAP ═══════════════ -->
+    <section id="section-roadmap" class="content-section">
+      <div class="section-header">
+        <h3>🗺️ Placement Roadmap</h3>
+        <p>Your 30-day action plan to crack placement</p>
+      </div>
+      <div class="roadmap-timeline">
+        <div class="timeline-track"></div>
+        <div class="timeline-item tl-complete">
+          <div class="tl-dot">✅</div>
+          <div class="tl-card glass-card">
+            <h4>Week 1: Foundation</h4>
+            <p>Aptitude basics, number systems, verbal basics</p>
+            <div class="tl-tags"><span class="tl-tag">Aptitude</span><span class="tl-tag">Verbal</span></div>
+          </div>
+        </div>
+        <div class="timeline-item tl-active">
+          <div class="tl-dot">🔥</div>
+          <div class="tl-card glass-card">
+            <h4>Week 2: Core Technical</h4>
+            <p>DSA, algorithms, OOP, DBMS fundamentals</p>
+            <div class="tl-tags"><span class="tl-tag active">DSA</span><span class="tl-tag active">DBMS</span></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">🎯</div>
+          <div class="tl-card glass-card">
+            <h4>Week 3: Mock Tests</h4>
+            <p>Full-length mock placement tests, time management</p>
+            <div class="tl-tags"><span class="tl-tag">Mock Test</span><span class="tl-tag">Speed</span></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="tl-dot">🏆</div>
+          <div class="tl-card glass-card">
+            <h4>Week 4: Interview Prep</h4>
+            <p>Technical + HR interviews, system design basics</p>
+            <div class="tl-tags"><span class="tl-tag">Interview</span><span class="tl-tag">HR</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card" style="margin-top:2rem">
+        <h3>🏢 Company-wise Preparation</h3>
+        <div class="company-grid">
+          <div class="company-card" onclick="loadCompanyPrep('tcs')">
+            <div class="company-logo">TCS</div>
+            <span>TCS</span>
+          </div>
+          <div class="company-card" onclick="loadCompanyPrep('infosys')">
+            <div class="company-logo">INF</div>
+            <span>Infosys</span>
+          </div>
+          <div class="company-card" onclick="loadCompanyPrep('wipro')">
+            <div class="company-logo">WIP</div>
+            <span>Wipro</span>
+          </div>
+          <div class="company-card" onclick="loadCompanyPrep('amazon')">
+            <div class="company-logo">AMZ</div>
+            <span>Amazon</span>
+          </div>
+          <div class="company-card" onclick="loadCompanyPrep('google')">
+            <div class="company-logo">GGL</div>
+            <span>Google</span>
+          </div>
+          <div class="company-card" onclick="loadCompanyPrep('microsoft')">
+            <div class="company-logo">MS</div>
+            <span>Microsoft</span>
+          </div>
+        </div>
+        <div id="company-prep-detail" class="hidden" style="margin-top:1rem"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ LEADERBOARD ═══════════════ -->
+    <section id="section-leaderboard" class="content-section">
+      <div class="section-header">
+        <h3>🏆 Global Leaderboard</h3>
+        <p>Compete with peers across India</p>
+      </div>
+      <div class="glass-card">
+        <div class="lb-controls">
+          <button class="btn-3d btn-primary-3d" onclick="loadLeaderboard()">🔄 Refresh</button>
+        </div>
+        <div id="leaderboard-content">
+          <p class="empty-state">Click Refresh to load leaderboard</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ACHIEVEMENT TOAST -->
+<div class="achievement-toast" id="achievement-toast" style="display:none">
+  <span class="toast-icon">🏆</span>
+  <div class="toast-text">
+    <strong id="toast-title">Achievement Unlocked!</strong>
+    <span id="toast-desc">-</span>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

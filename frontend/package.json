@@ -1,0 +1,17 @@
+{
+  "name": "placement-analyzer-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Placement Strategy Analyzer",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3001 --host=localhost",
+    "dev": "live-server --port=3001 --host=localhost --watch=.",
+    "build": "echo 'Static files ready for deployment'"
+  },
+  "keywords": ["placement", "quiz", "frontend", "spa"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
