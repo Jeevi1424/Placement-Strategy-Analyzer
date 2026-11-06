@@ -15,3 +15,5 @@ services:
         value: 10000
       - key: FRONTEND_URL
         value: https://leafy-pixie-19035b.netlify.app
+      - key: RENDER_URL
+        value: https://placement-strategy-analyzer-f54n.onrender.com
