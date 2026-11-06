@@ -15,8 +15,18 @@ let charts = {};
 let xpPoints = parseInt(localStorage.getItem('psa_xp') || '0');
 let streak = parseInt(localStorage.getItem('psa_streak') || '0');
 
+// ─── KEEP BACKEND ALIVE (ping every 10 mins to prevent Render spin-down) ───
+function keepBackendAlive() {
+  // Only ping in production
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    fetch(`${PROD_API}/health`).catch(() => {}); // silent ping
+    setInterval(() => fetch(`${PROD_API}/health`).catch(() => {}), 10 * 60 * 1000); // every 10 mins
+  }
+}
+
 // ─── INIT ────────────────────────────────────
 window.onload = () => {
+  keepBackendAlive(); // ping backend to prevent Render spin-down
   setTimeout(() => {
     document.getElementById('loading-screen').style.opacity = '0';
     setTimeout(() => {
