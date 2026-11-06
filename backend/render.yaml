@@ -3,6 +3,7 @@ services:
     name: placement-analyzer-api
     env: node
     plan: free
+    rootDir: backend
     buildCommand: npm install
     startCommand: node server.js
     envVars:
@@ -12,3 +13,5 @@ services:
         generateValue: true
       - key: PORT
         value: 10000
+      - key: FRONTEND_URL
+        value: https://leafy-pixie-19035b.netlify.app

@@ -711,6 +711,17 @@ async function loadLeaderboard() {
 }
 
 // ─── HELPERS ─────────────────────────────────
-function authFetch(url, options = {}) {
-  return fetch(url, { ...options, headers: { 'Authorization': `Bearer ${token}`, ...(options.headers || {}) } });
+async function authFetch(url, options = {}) {
+  const res = await fetch(url, { ...options, headers: { 'Authorization': `Bearer ${token}`, ...(options.headers || {}) } });
+  if (res.status === 401 || res.status === 403) {
+    // Token expired or invalid — clear session and redirect to login
+    localStorage.removeItem('psa_token');
+    localStorage.removeItem('psa_user');
+    token = null;
+    currentUser = null;
+    alert('Your session has expired. Please log in again.');
+    showAuth();
+    throw new Error('Session expired');
+  }
+  return res;
 }
